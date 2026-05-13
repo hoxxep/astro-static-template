@@ -37,17 +37,6 @@ If you'd rather see the full friendly walkthrough, clone the repo, run
 `pnpm install && pnpm run dev`, and open <http://localhost:4321>. The
 default homepage is the walkthrough.
 
-## For the template owner (you, Liam)
-
-Two things to do once after you publish this repo to GitHub:
-
-1. **Settings → General →** tick **"Template repository"**. That's what makes
-   the green "Use this template" button (and the `/generate` URL) appear for
-   visitors.
-2. **Set `TEMPLATE_GENERATE_URL`** at the top of `src/pages/index.astro` to
-   `https://github.com/<your-username>/<repo>/generate`. That's what the
-   "Create your copy" buttons on the live walkthrough point at.
-
 ## Commands
 
 ```bash
