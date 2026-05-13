@@ -9,6 +9,7 @@ import Layout from '@layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import Nav from "@components/Nav.astro";
 import Footer from "@components/Footer.astro";
+import { withBase } from "@lib/url";
 
 // TODO: only relevant if you're republishing this *as a template* yourself.
 // Set to "https://github.com/<owner>/<repo>/generate" so the "Create your
@@ -208,16 +209,16 @@ homepage introducing me as <span class="text-accent-blue">a few words about you<
         <p class="text-text-secondary leading-snug mb-6 max-w-2xl">
           GitHub will host your site for free. The setup takes about two
           minutes and is a few clicks in the GitHub website — the
-          <a href="/about/" class="link-accent">publishing page</a> walks
+          <a href={withBase("/about/")} class="link-accent">publishing page</a> walks
           through it step by step, including how to use a custom domain like
           <code>yourname.com</code> if you have one.
         </p>
         <div class="flex flex-wrap gap-2 xs:gap-4">
-          <a href="/about/#github-pages" class="btn">
+          <a href={withBase("/about/#github-pages")} class="btn">
             <Icon name="lucide:github" class="w-4 h-4" />
             Free GitHub URL
           </a>
-          <a href="/about/#custom-domain" class="btn">
+          <a href={withBase("/about/#custom-domain")} class="btn">
             <Icon name="lucide:globe" class="w-4 h-4" />
             Custom domain
           </a>

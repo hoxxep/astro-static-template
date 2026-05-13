@@ -8,6 +8,7 @@ import Layout from '@layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import Nav from "@components/Nav.astro";
 import Footer from "@components/Footer.astro";
+import { withBase } from "@lib/url";
 ---
 
 <!-- TODO: change <title> + meta description below when you make this page yours. -->
@@ -120,7 +121,7 @@ import Footer from "@components/Footer.astro";
 
       <section class="mb-12">
         <div class="flex flex-wrap gap-2 xs:gap-4">
-          <a href="/" class="btn">
+          <a href={withBase("/")} class="btn">
             <Icon name="lucide:arrow-left" class="w-4 h-4" />
             Back to start
           </a>

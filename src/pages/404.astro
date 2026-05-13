@@ -6,6 +6,7 @@ import Layout from '@layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import { withBase } from '@lib/url';
 ---
 
 <Layout
@@ -32,11 +33,11 @@ import Footer from '@components/Footer.astro';
         </p>
 
         <div class="flex flex-wrap gap-3 justify-center">
-          <a href="/" class="btn">
+          <a href={withBase("/")} class="btn">
             <Icon name="lucide:home" class="w-4 h-4" />
             Take me home
           </a>
-          <a href="/about/" class="btn">
+          <a href={withBase("/about/")} class="btn">
             <Icon name="lucide:cloud-upload" class="w-4 h-4" />
             Publishing
           </a>

@@ -68,7 +68,7 @@ pnpm install          # Install dependencies
 pnpm run dev          # Start dev server at localhost:4321
 pnpm run build        # Build production site to ./dist/
 pnpm run preview      # Preview production build locally
-pnpm run test         # Run astro check (type + content-schema checking; no unit tests)
+pnpm run test         # Run astro check (types + content schema) and then astro build with internal + external link checking. No unit tests.
 ```
 
 ## Architecture
@@ -132,8 +132,9 @@ the icons you reference are bundled.
 - `build.inlineStylesheets: "always"` — all CSS is inlined into the HTML,
   saving a request on first load.
 - `astro-broken-link-checker` runs during `astro build` and **fails the build**
-  on broken internal links. Set `CHECK_EXTERNAL_LINKS=true` to also validate
-  external ones.
+  on broken internal links. `pnpm test` runs the build with
+  `CHECK_EXTERNAL_LINKS=true` so external links are validated too — slower
+  but catches dead third-party URLs before they ship.
 
 ### Path aliases
 
@@ -142,14 +143,23 @@ Configured in `tsconfig.json`:
 - `@layouts/*` → `src/layouts/*`
 - `@components/*` → `src/components/*`
 - `@assets/*` → `src/assets/*`
-
-(`@lib/*` → `src/lib/*` is in `tsconfig.json` too; the template doesn't
-currently ship any files there, but the alias is still wired up.)
+- `@lib/*` → `src/lib/*` (utilities like `withBase()` — see Conventions below)
 
 ## Conventions
 
-- **Always use a trailing slash on internal links.** Write `href="/about/"`,
-  not `href="/about"`. The broken-link checker will flag it.
+- **Internal links go through `withBase()` from `@lib/url`.** Write
+  `href={withBase("/about/")}`, not `href="/about/"`. The helper prepends
+  the configured Astro `base:` (so links stay correct both locally and when
+  the site is deployed under a GitHub Pages subpath like
+  `username.github.io/repo/`) and enforces the trailing slash. It also
+  handles file paths (`/favicon.svg`) and fragments (`/about/#section`)
+  correctly. The broken-link checker catches missing trailing slashes; the
+  wrong-base case is silent until you deploy, so always route through the
+  helper.
+- **Run `pnpm test` after making changes.** It runs `astro check` plus a
+  full build with internal + external link validation, so broken links and
+  type errors get caught locally instead of in CI. Treat a clean run as
+  part of "done" for any non-trivial edit.
 - **Use the custom utilities (`.btn`, `.card`, etc.) for the design-system
   pieces** rather than re-implementing them from Tailwind primitives — that
   way the theme variables propagate.

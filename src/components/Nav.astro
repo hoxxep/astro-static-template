@@ -2,6 +2,7 @@
 import Favicon from "../../public/favicon.svg";
 import DarkModeToggle from "@components/DarkModeToggle.astro";
 import { Icon } from "astro-icon/components";
+import { withBase } from "@lib/url";
 
 const SITE_NAME = "mysite.example"; // TODO: site title shown in the header (often your domain or handle).
 const GITHUB_URL = "https://github.com/hoxxep/astro-static-template"; // TODO: remove this link (and the GitHub entries below) — it points at the template repo and shouldn't ship on your personal site.
@@ -13,7 +14,7 @@ const links = [
 
 <header class="py-8 relative">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-    <a href="/" class="font-bold font-mono text-lg text-text-primary hover:text-accent-blue transition-colors flex gap-3 items-center">
+    <a href={withBase("/")} class="font-bold font-mono text-lg text-text-primary hover:text-accent-blue transition-colors flex gap-3 items-center">
       <Favicon class="w-6 h-6" />
       {SITE_NAME}
     </a>
@@ -21,7 +22,7 @@ const links = [
     <div class="flex items-center gap-3 xs:gap-6">
       <nav class="hidden sm:flex items-center gap-3 xs:gap-6 text-sm font-bold">
         {links.map(({ href, label }) => (
-          <a href={href} class="text-text-secondary hover:text-text-primary transition-colors">{label}</a>
+          <a href={withBase(href)} class="text-text-secondary hover:text-text-primary transition-colors">{label}</a>
         ))}
         <a href={GITHUB_URL} target="_blank" rel="noopener" aria-label="GitHub repository" class="text-text-secondary hover:text-text-primary transition-colors">
           <Icon name="lucide:github" class="w-5 h-5" />
@@ -50,7 +51,7 @@ const links = [
   >
     <nav class="max-w-4xl mx-auto px-4 py-2 flex flex-col text-sm font-bold">
       {links.map(({ href, label, icon }) => (
-        <a href={href} class="py-3 flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+        <a href={withBase(href)} class="py-3 flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
           <Icon name={icon} class="w-5 h-5" />
           {label}
         </a>

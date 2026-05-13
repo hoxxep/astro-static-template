@@ -1,5 +1,6 @@
 ---
 import "../global.css";
+import { withBase } from "@lib/url";
 
 const SITE_NAME = "My Site";                                       // TODO: your site name (used in <title>, OG/Twitter tags, and the og:site_name).
 const SITE_DEFAULT_DESCRIPTION = "A short description of your site."; // TODO: fallback meta description (shown when a page doesn't pass one).
@@ -49,8 +50,8 @@ const ogImage = image ?? (siteUrl ? new URL("/og-image.png", siteUrl).toString()
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-  <link rel="manifest" href="/manifest.json"/>
+  <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")}/>
+  <link rel="manifest" href={withBase("/manifest.json")}/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
   <script is:inline>

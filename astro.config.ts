@@ -12,7 +12,8 @@ export default defineConfig({
     // TODO: set this to your deployed URL — no trailing slash. The sitemap,
     // canonical links, og:image and robots.txt all read from this value.
     // Examples: "https://yourname.com" or "https://your-username.github.io/your-repo"
-    site: 'https://example.com',
+    site: 'https://hoxxep.github.io',
+    base: '/astro-static-template',
 
     compressHTML: import.meta.env.PROD,
 
