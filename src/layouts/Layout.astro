@@ -1,0 +1,112 @@
+---
+import "../global.css";
+
+const SITE_NAME = "My Site";                                       // TODO: your site name (used in <title>, OG/Twitter tags, and the og:site_name).
+const SITE_DEFAULT_DESCRIPTION = "A short description of your site."; // TODO: fallback meta description (shown when a page doesn't pass one).
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  class?: string;
+}
+
+const {
+  title = SITE_NAME,
+  description = SITE_DEFAULT_DESCRIPTION,
+  image,
+  class: className,
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const siteUrl = Astro.site;
+const canonicalUrl = siteUrl ? new URL(currentPath, siteUrl).toString() : undefined;
+// TODO: drop a 1200×630 PNG at `public/og-image.png` so link previews on
+// Twitter/Slack/Discord etc. look nice. If the file is missing the og:image
+// tags are simply omitted — no build error.
+const ogImage = image ?? (siteUrl ? new URL("/og-image.png", siteUrl).toString() : undefined);
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>{title}</title>
+  {canonicalUrl && <link rel="canonical" href={canonicalUrl}/>}
+  <meta name="description" content={description}/>
+
+  <meta name="og:title" content={title}/>
+  <meta name="og:description" content={description}/>
+  {canonicalUrl && <meta name="og:url" content={canonicalUrl}/>}
+  <meta name="og:site_name" content={SITE_NAME}/>
+  {ogImage && <meta name="og:image" content={ogImage}/>}
+  <meta name="og:type" content="website"/>
+
+  <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  {ogImage && <meta name="twitter:image" content={ogImage}>}
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="manifest" href="/manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+  <script is:inline>
+    function setWebsiteColors() {
+      const theme = localStorage.getItem("theme");
+
+      // helps display which theme we're using in the toggle
+      document.documentElement.classList.remove("theme-dark", "theme-light", "theme-system");
+      if (theme === "light" || theme === "dark") {
+        document.documentElement.classList.add("theme-" + theme);
+      } else if (!theme) {
+        document.documentElement.classList.add("theme-system");
+      }
+
+      // we set .dark if we're in the dark theme; or it's auto && nighttime
+      const isDark = theme === "dark" ||
+        (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (isDark) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
+
+    // immediately set theme
+    setWebsiteColors();
+
+    // also check every 5 mins, so we transition auto to dark/light with the system in auto
+    setInterval(setWebsiteColors, 5 * 60 * 60 * 1000);
+  </script>
+
+  <!-- TODO: drop in analytics here if you want them. e.g.
+       <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+       or Plausible / Fathom / GoatCounter. -->
+</head>
+<body class={className}>
+<slot/>
+</body>
+</html>
+
+<script>
+  // Mailto obfuscation: links with href="mailto:me" are rewritten on load so
+  // scrapers reading the raw HTML don't see the address. Edit USER and DOMAIN
+  // (base64-encoded) below, or remove this block entirely if you don't care.
+  // TODO: replace these base64 strings with your own. Encode at base64encode.org.
+  const USER = window.atob("aGVsbG8=");          // TODO: base64("hello") → your username before the @
+  const DOMAIN = window.atob("ZXhhbXBsZS5jb20="); // TODO: base64("example.com") → your domain after the @
+  const email = USER + "@" + DOMAIN;
+
+  document.querySelectorAll<HTMLAnchorElement>("a[href='mailto:me']")
+    .forEach(link => {
+      link.href = "mailto:" + email;
+    });
+
+  document.querySelectorAll<HTMLElement>(".mailto-me")
+    .forEach(link => {
+      link.textContent = email;
+    });
+</script>

@@ -1,0 +1,92 @@
+---
+import Favicon from "../../public/favicon.svg";
+import DarkModeToggle from "@components/DarkModeToggle.astro";
+import { Icon } from "astro-icon/components";
+
+const SITE_NAME = "mysite.example"; // TODO: site title shown in the header (often your domain or handle).
+const GITHUB_URL = "https://github.com/hoxxep/astro-static-template"; // TODO: remove this link (and the GitHub entries below) — it points at the template repo and shouldn't ship on your personal site.
+
+const links = [
+  { href: "/about/", label: "Publishing", icon: "lucide:globe" },
+];
+---
+
+<header class="py-8 relative">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+    <a href="/" class="font-bold font-mono text-lg text-text-primary hover:text-accent-blue transition-colors flex gap-3 items-center">
+      <Favicon class="w-6 h-6" />
+      {SITE_NAME}
+    </a>
+
+    <div class="flex items-center gap-3 xs:gap-6">
+      <nav class="hidden sm:flex items-center gap-3 xs:gap-6 text-sm font-bold">
+        {links.map(({ href, label }) => (
+          <a href={href} class="text-text-secondary hover:text-text-primary transition-colors">{label}</a>
+        ))}
+        <a href={GITHUB_URL} target="_blank" rel="noopener" aria-label="GitHub repository" class="text-text-secondary hover:text-text-primary transition-colors">
+          <Icon name="lucide:github" class="w-5 h-5" />
+        </a>
+      </nav>
+
+      <DarkModeToggle />
+
+      <button
+        id="mobile-nav-toggle"
+        type="button"
+        class="sm:hidden text-text-secondary hover:text-text-primary transition-colors"
+        aria-expanded="false"
+        aria-controls="mobile-nav-menu"
+        aria-label="Toggle navigation menu"
+      >
+        <Icon name="lucide:menu" class="w-6 h-6 mobile-nav-open" />
+        <Icon name="lucide:x" class="w-6 h-6 mobile-nav-close hidden" />
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="mobile-nav-menu"
+    class="sm:hidden hidden absolute top-full left-0 right-0 z-40 bg-bg-page border-b border-accent-border-subtle shadow-flat"
+  >
+    <nav class="max-w-4xl mx-auto px-4 py-2 flex flex-col text-sm font-bold">
+      {links.map(({ href, label, icon }) => (
+        <a href={href} class="py-3 flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+          <Icon name={icon} class="w-5 h-5" />
+          {label}
+        </a>
+      ))}
+      <a href={GITHUB_URL} target="_blank" rel="noopener" class="py-3 flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
+        <Icon name="lucide:github" class="w-5 h-5" />
+        GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("mobile-nav-toggle");
+  const menu = document.getElementById("mobile-nav-menu");
+  const openIcon = toggle?.querySelector(".mobile-nav-open");
+  const closeIcon = toggle?.querySelector(".mobile-nav-close");
+
+  const setOpen = (open: boolean) => {
+    if (!toggle || !menu || !openIcon || !closeIcon) return;
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    menu.classList.toggle("hidden", !open);
+    openIcon.classList.toggle("hidden", open);
+    closeIcon.classList.toggle("hidden", !open);
+  };
+
+  toggle?.addEventListener("click", () => {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  menu?.querySelectorAll("a").forEach((a) => {
+    a.addEventListener("click", () => setOpen(false));
+  });
+
+  // Collapse when resizing past the `sm` breakpoint so state doesn't leak to desktop.
+  window.matchMedia("(min-width: 40rem)").addEventListener("change", (e) => {
+    if (e.matches) setOpen(false);
+  });
+</script>

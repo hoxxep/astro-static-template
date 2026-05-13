@@ -1,0 +1,60 @@
+---
+// TODO: minor copy tweaks once the site is yours, but most of this can stay.
+//   - Swap the buttons at the bottom if you rename /about/ or add other landing pages.
+//   - Adjust the tone of the copy below if it doesn't match your voice.
+import Layout from '@layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+---
+
+<Layout
+  title="Page not found"
+  description="The page you were looking for does not exist."
+>
+  <div class="min-h-screen flex flex-col">
+    <Nav />
+
+    <main class="max-w-2xl mx-auto w-full px-4 sm:px-6 py-16 sm:py-24 flex-1 flex items-center justify-center">
+      <div class="flex flex-col items-center text-center">
+        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-bg-grey border border-accent-border-subtle">
+          <Icon name="lucide:compass" class="w-8 h-8 text-accent-blue" />
+        </div>
+
+        <p class="font-mono text-sm text-text-muted tracking-wider mt-5 mb-2">404 — page not found</p>
+        <h1 class="text-3xl sm:text-4xl text-text-primary mb-4">Looks like we got lost.</h1>
+
+        <p class="text-text-secondary leading-relaxed mb-2">
+          There's nothing at <code id="req-path" class="font-mono text-text-primary break-all">/the-page-you-wanted</code>.
+        </p>
+        <p class="text-text-secondary leading-relaxed mb-10">
+          The page may have moved, or it might never have existed at all. Either way — let's get you back to somewhere real.
+        </p>
+
+        <div class="flex flex-wrap gap-3 justify-center">
+          <a href="/" class="btn">
+            <Icon name="lucide:home" class="w-4 h-4" />
+            Take me home
+          </a>
+          <a href="/about/" class="btn">
+            <Icon name="lucide:cloud-upload" class="w-4 h-4" />
+            Publishing
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+</Layout>
+
+<script is:inline>
+  (function () {
+    try {
+      var p = window.location.pathname || '/';
+      if (p.length > 80) p = p.slice(0, 77) + '...';
+      var a = document.getElementById('req-path');
+      if (a) a.textContent = p;
+    } catch (_) { /* noop */ }
+  })();
+</script>

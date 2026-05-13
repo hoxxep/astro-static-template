@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --breakpoint-xs: 30rem;
+
+    --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --color-accent-blue: var(--accent-blue);
+    --color-accent-blue-light: var(--accent-blue-light);
+    --color-bg-blue-light: var(--bg-blue-light);
+
+    --color-accent-grey: var(--accent-grey);
+    --color-accent-grey-medium: var(--accent-grey-medium);
+    --color-accent-grey-light: var(--accent-grey-light);
+    --color-bg-grey: var(--bg-grey);
+
+    --color-accent-border: var(--accent-border);
+    --color-accent-border-subtle: var(--accent-border-subtle);
+    --color-accent-shadow: var(--accent-shadow);
+
+    --color-bg-surface: var(--bg-surface);
+    --color-bg-page: var(--bg-page);
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-muted: var(--text-muted);
+}
+
+:root {
+    /* Light theme — neutral slate palette. Tweak hues/chroma to taste. */
+    --accent-blue: oklch(0.55 0.16 245);          /* primary accent */
+    --accent-blue-light: oklch(0.7 0.1 245);
+    --bg-blue-light: oklch(0.95 0.02 245);
+
+    --accent-grey: oklch(0.4 0.01 250);           /* cool dark grey */
+    --accent-grey-medium: oklch(0.6 0.01 250);
+    --accent-grey-light: oklch(0.85 0.01 250);
+    --bg-grey: oklch(0.96 0.005 250);
+
+    --accent-border: oklch(0.3 0.01 250);          /* near-black */
+    --accent-border-subtle: oklch(0.82 0.01 250);  /* subtle border */
+    --accent-shadow: oklch(0.75 0.01 250 / 0.3);   /* shadow colour */
+    --accent-shadow-hover: oklch(0.75 0.01 250 / 0.5);   /* hover shadow */
+    --border-width: 1px;
+
+    --bg-surface: oklch(0.99 0.005 250);           /* card / surface */
+    --bg-page: oklch(0.97 0.005 250);              /* page background */
+    --text-primary: oklch(0.25 0.02 250);
+    --text-secondary: oklch(0.45 0.015 250);
+    --text-muted: oklch(0.55 0.01 250);
+}
+
+/*@media (prefers-color-scheme: dark) {*/
+    :root.dark {
+        /* Dark theme — same hue, inverted lightness ramps. */
+        --accent-blue: oklch(0.78 0.14 235);
+        --accent-blue-light: oklch(0.55 0.1 245);
+        --bg-blue-light: oklch(0.3 0.04 245);
+
+        --accent-grey: oklch(0.85 0.01 250);
+        --accent-grey-medium: oklch(0.7 0.01 250);
+        --accent-grey-light: oklch(0.45 0.01 250);
+        --bg-grey: oklch(0.32 0.01 250);
+
+        --accent-border: oklch(0.65 0.01 250);
+        --accent-border-subtle: oklch(0.45 0.01 250);
+        --accent-shadow: oklch(0.45 0.01 250 / 0.32);
+        --accent-shadow-hover: oklch(0.45 0.01 250 / 0.45);
+
+        --bg-surface: oklch(0.32 0.01 250);
+        --bg-page: oklch(0.26 0.01 250);
+        --text-primary: oklch(0.92 0.005 250);
+        --text-secondary: oklch(0.82 0.005 250);
+        --text-muted: oklch(0.6 0.005 250);
+    }
+/*}*/
+
+html {
+    font-family: var(--font-sans), ui-native, sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    min-height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans), ui-native, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+/* Inline accent link with animated underline on hover */
+.link-accent {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: calc(var(--border-width) * 2) solid transparent;
+    transition: border-color 0.15s;
+}
+
+.link-accent:hover {
+    border-bottom-color: var(--accent-blue);
+}
+
+/* 45-degree flat drop shadow (no blur) — the signature look */
+@utility shadow-flat {
+    box-shadow: 4px 4px 0 var(--accent-shadow);
+}
+
+@utility shadow-flat-strong {
+    box-shadow: 4px 4px 0 --alpha(var(--accent-border) / 0.7);
+}
+
+@utility shadow-flat-sm {
+    box-shadow: 2px 2px 0 var(--accent-shadow);
+}
+
+@utility shadow-flat-sm-strong {
+    box-shadow: 2px 2px 0 --alpha(var(--accent-border) / 0.7);
+}
+
+/* Button: monospace label, flat shadow, lifts on hover */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border: var(--border-width) solid var(--accent-border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--accent-shadow);
+    transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+
+.btn:hover {
+    box-shadow: 4px 4px 0 var(--accent-shadow-hover);
+    transform: translate(-1px, -1px);
+}
+
+.btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--accent-shadow);
+}
+
+/* Clickable card with the same lift behaviour as .btn */
+.card {
+    background: var(--bg-surface);
+    border: var(--border-width) solid var(--accent-border-subtle);
+    box-shadow: 3px 3px 0 var(--accent-shadow);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+    box-shadow: 4px 4px 0 var(--accent-shadow-hover);
+    transform: translate(-1px, -1px);
+}
+
+.card:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--accent-shadow);
+}
+
+/* Outlined inline badge */
+.tag {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: var(--border-width) solid var(--accent-border);
+}
+
+/* Soft inline badge (no border, just a tinted background) */
+.tag-soft {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 1.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    font-weight: 500;
+    background: var(--bg-grey);
+}
+
+/* Floating popover (used by the theme dropdown) */
+@utility popup {
+    background: var(--bg-surface);
+    border: var(--border-width) solid var(--accent-border-subtle);
+    @apply shadow-flat-sm;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "astro-static-template",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A starter template for static, content-light personal websites — built with Astro and Tailwind, designed to be easy to customise with Claude Code or Codex.",
+  "repository": "https://github.com/hoxxep/astro-static-template",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "astro check",
+    "astro": "astro"
+  },
+  "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=11"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/sitemap": "^3.7.2",
+    "@iconify-json/lucide": "^1.2.0",
+    "@tailwindcss/vite": "^4.2.0",
+    "astro": "^6.3.1",
+    "astro-broken-link-checker": "github:hoxxep/astro-broken-link-checker#patch",
+    "astro-icon": "^1.1.5",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}

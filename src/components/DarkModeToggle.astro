@@ -1,0 +1,93 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div id="theme-toggle-container" class="relative group">
+  <div id="theme-open" class="text-text-secondary hover:text-text-primary transition-colors">
+    <Icon name="lucide:sun" class="w-5 h-5 cursor-pointer hidden light" />
+    <Icon name="lucide:moon" class="w-5 h-5 cursor-pointer hidden dark" />
+  </div>
+  <div id="theme-dropdown" class="right-0 mt-2 popup flex-col absolute font-medium hidden">
+    <div class="bg-bg-page text-text-secondary font-mono font-bold px-2 py-1">
+      Theme
+    </div>
+    <div id="theme-toggles" class="p-2 min-w-40 flex flex-col gap-2">
+      <div data-theme="" class="theme-toggle flex gap-2 items-center hover:text-accent-blue transition-colors cursor-pointer">
+        <Icon name="lucide:monitor" class="w-4 h-4 cursor-pointer" />
+        <span>System / Auto</span>
+      </div>
+      <div data-theme="light" class="theme-toggle flex gap-2 items-center hover:text-accent-blue transition-colors cursor-pointer">
+        <Icon name="lucide:sun" class="w-4 h-4 cursor-pointer" />
+        <span>Light</span>
+      </div>
+      <div data-theme="dark" class="theme-toggle flex gap-2 items-center hover:text-accent-blue transition-colors cursor-pointer">
+        <Icon name="lucide:moon" class="w-4 h-4 cursor-pointer" />
+        <span>Dark</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Trigger reflects the effective theme (light vs dark), regardless of whether the user picked it explicitly or via system. */
+  :global(html:not(.dark)) #theme-open .light {
+    display: block;
+  }
+
+  :global(html.dark) #theme-open .dark {
+    display: block;
+  }
+</style>
+
+<script>
+  /** Dark mode logic also includes an inline script in Layout.astro <head> */
+  const themeOpenButton = document.getElementById("theme-open");
+  const themeDropdown = document.getElementById("theme-dropdown");
+  const themeToggles = document.querySelectorAll("#theme-toggles .theme-toggle") as NodeListOf<HTMLElement>;
+
+  function updateTheme(theme?: string) {
+    if (theme) {
+      localStorage.setItem("theme", theme);
+    } else {
+      localStorage.removeItem("theme");
+    }
+
+    // helps display which theme we're using in the toggle
+    document.documentElement.classList.remove("theme-dark", "theme-light", "theme-system");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.classList.add("theme-" + theme);
+    } else if (!theme) {
+      document.documentElement.classList.add("theme-system");
+    }
+
+    document.documentElement.classList.remove('dark', 'light', 'auto');
+    document.documentElement.classList.toggle(
+      "dark",
+      theme === "dark" ||
+      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches),
+    );
+  }
+
+  /** Button to toggle the theme dropdown */
+  themeOpenButton?.addEventListener("click", () => {
+    themeDropdown?.classList.toggle("hidden");
+    themeDropdown?.classList.toggle("flex");
+  });
+
+  /** Buttons for setting themes */
+  themeToggles?.forEach(toggle => toggle.addEventListener("click", () => {
+    themeDropdown?.classList.add("hidden");
+    themeDropdown?.classList.remove("flex");
+    const theme = toggle.dataset.theme;
+    updateTheme(theme);
+  }));
+
+  /** Delegated click handler to close the theme menu when clicking elsewhere */
+  document.documentElement.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    if (!themeDropdown?.classList.contains("hidden") && !target.closest('#theme-toggle-container')) {
+      themeDropdown?.classList.add("hidden");
+      themeDropdown?.classList.remove("flex");
+    }
+  });
+</script>

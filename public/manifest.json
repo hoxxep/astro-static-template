@@ -1,0 +1,18 @@
+{
+  "short_name": "My Site",
+  "name": "My Site",
+  "description": "A short description of your site.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#1e293b",
+  "background_color": "#ffffff"
+}

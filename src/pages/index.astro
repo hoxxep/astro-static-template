@@ -1,0 +1,230 @@
+---
+// =========================================================================
+// TODO: this is the template's walkthrough homepage. Once you've made the
+// template your own, REPLACE this whole file with your real landing page
+// (your bio, projects, links, whatever). Or ask your agent to "rewrite the
+// homepage as my personal landing page" and it will do exactly that.
+// =========================================================================
+import Layout from '@layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import Nav from "@components/Nav.astro";
+import Footer from "@components/Footer.astro";
+
+// TODO: only relevant if you're republishing this *as a template* yourself.
+// Set to "https://github.com/<owner>/<repo>/generate" so the "Create your
+// copy" buttons send visitors to GitHub's template-generator. If you're
+// just making a personal site, you'll be deleting this whole file anyway.
+const TEMPLATE_GENERATE_URL = "https://github.com/hoxxep/astro-static-template/generate";
+
+type StepLink = { href: string, label: string };
+const installSteps: { icon: string, title: string, description: string, links?: StepLink[] }[] = [
+  {
+    icon: "lucide:copy-plus",
+    title: "Create your copy on GitHub",
+    description: "One click — GitHub makes you a brand-new repo from this template, owned by you, with a clean history. Pick a name and whether it's public or private.",
+    links: [
+      { href: TEMPLATE_GENERATE_URL, label: "Create your copy" },
+    ],
+  },
+  {
+    icon: "lucide:sparkles",
+    title: "Install Claude Code or Codex",
+    description: "Pick whichever you prefer — either will work for editing this site. Their setup pages walk you through it; no prior experience needed.",
+    links: [
+      { href: "https://claude.com/claude-code", label: "Claude Code" },
+      { href: "https://openai.com/codex", label: "Codex" },
+    ],
+  },
+];
+---
+
+<!-- TODO: change <title> + meta description below when you make this page yours. -->
+<Layout
+  title="astro-static-template"
+  description="A friendly starting point for a personal website — built with Astro, Tailwind, and an AI coding agent like Claude Code or Codex."
+>
+  <div class="min-h-screen flex flex-col">
+    <Nav />
+
+    <main class="max-w-4xl mx-auto w-full px-4 sm:px-6 py-16 flex-1">
+      <!-- Hero -->
+      <section class="mb-16">
+        <span class="tag-soft mb-4 font-mono">astro-static-template</span>
+        <h1 class="text-4xl mb-3 text-text-primary">A personal website you build by chatting with an AI.</h1>
+        <p class="text-text-primary mb-4 max-w-2xl text-lg leading-snug">
+          You're looking at the template, unchanged. No coding required — just
+          a willingness to describe what you want.
+        </p>
+        <p class="text-text-secondary mb-8 max-w-2xl leading-snug">
+          You'll team up with an AI coding agent like
+          <a href="https://claude.com/claude-code" target="_blank" rel="noopener" class="link-accent">Claude Code</a>
+          or <a href="https://openai.com/codex" target="_blank" rel="noopener" class="link-accent">Codex</a>.
+          You say things like "make the homepage about me" or "change the colours to green"; it does the typing.
+        </p>
+        <div class="flex flex-wrap gap-2 xs:gap-4">
+          <a href={TEMPLATE_GENERATE_URL} target="_blank" rel="noopener" class="btn">
+            <Icon name="lucide:copy-plus" class="w-4 h-4" />
+            Create your copy
+          </a>
+          <a href="#setup" class="btn">
+            <Icon name="lucide:rocket" class="w-4 h-4" />
+            Walk me through it
+          </a>
+        </div>
+      </section>
+
+      <!-- Setup -->
+      <section id="setup" class="scroll-mt-8 mb-16">
+        <div class="flex items-center gap-3 mb-3">
+          <Icon name="lucide:list-checks" class="w-5 h-5 text-accent-blue" />
+          <h2 class="text-xl text-text-primary">1. Get set up</h2>
+        </div>
+        <p class="text-text-secondary leading-snug mb-8 max-w-2xl">
+          Two one-time things. No terminal commands required from you — your
+          agent will run any commands it needs in the next steps, and ask
+          permission as it goes.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {installSteps.map((step, i) => (
+            <div class="card p-5">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="tag-soft font-mono">{String(i + 1).padStart(2, "0")}</span>
+                <Icon name={step.icon} class="w-5 h-5 text-accent-blue" />
+                <h3 class="font-bold text-text-primary">{step.title}</h3>
+              </div>
+              <p class="text-text-secondary text-sm leading-tight">{step.description}</p>
+              {step.links && step.links.length > 0 && (
+                <div class="flex flex-wrap gap-x-4 gap-y-1 mt-3">
+                  {step.links.map((link) => (
+                    <a href={link.href} target="_blank" rel="noopener" class="link-accent text-sm inline-flex items-center gap-1">
+                      {link.label}
+                      <Icon name="lucide:arrow-up-right" class="w-3.5 h-3.5" />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Open the agent -->
+      <section id="open" class="scroll-mt-8 mb-16">
+        <div class="flex items-center gap-3 mb-3">
+          <Icon name="lucide:terminal" class="w-5 h-5 text-accent-blue" />
+          <h2 class="text-xl text-text-primary">2. Open the agent</h2>
+        </div>
+        <p class="text-text-secondary leading-snug mb-4 max-w-2xl">
+          You need the agent running <strong>on your own computer</strong> —
+          that's what lets it preview the site for you in the next step.
+        </p>
+        <p class="text-text-secondary leading-snug mb-4 max-w-2xl">
+          Open your Mac/Windows <strong>Terminal</strong> app (the
+          black-and-white text window — it's pre-installed; just search for
+          "Terminal" in Spotlight / Start menu). Then type <code>claude</code>
+          (or <code>codex</code>, depending which one you installed) and hit
+          <strong>Enter</strong>. The chat opens right there in the terminal
+          window.
+        </p>
+        <p class="text-text-secondary leading-snug mb-2 max-w-2xl">
+          Once the chat is open, paste the link to your GitHub repo (the page
+          you made in step 1) and ask the agent to set the project up.
+          Something like:
+        </p>
+        <pre class="bg-bg-surface border border-accent-border-subtle p-4 text-sm overflow-x-auto leading-relaxed mb-4"><code>Please get this repo set up on my computer:
+<span class="text-accent-blue">https://github.com/your-username/your-repo</span></code></pre>
+        <p class="text-text-secondary leading-snug max-w-2xl">
+          When the agent asks permission to install things or run commands,
+          say <strong>yes</strong> — that's how it does the work.
+        </p>
+      </section>
+
+      <!-- Preview -->
+      <section id="preview" class="scroll-mt-8 mb-16">
+        <div class="flex items-center gap-3 mb-3">
+          <Icon name="lucide:monitor" class="w-5 h-5 text-accent-blue" />
+          <h2 class="text-xl text-text-primary">3. Preview your site</h2>
+        </div>
+        <p class="text-text-secondary leading-snug mb-4 max-w-2xl">
+          Now you want a live preview running on your laptop so you can
+          actually see your changes. Ask the agent:
+        </p>
+        <pre class="bg-bg-surface border border-accent-border-subtle p-4 text-sm overflow-x-auto leading-relaxed mb-4"><code>Please tell me what I need to install, install anything missing,
+and start the preview so I can see the site.</code></pre>
+        <p class="text-text-secondary leading-snug mb-4 max-w-2xl">
+          The agent will check what's already on your computer, walk you
+          through installing <strong>Node.js</strong> and <strong>pnpm</strong>
+          if they're missing, and then run <code>pnpm install</code> followed
+          by <code>pnpm dev</code>. It'll print a link that looks like
+          <a href="http://localhost:4321" target="_blank" rel="noopener" class="link-accent"><code>http://localhost:4321</code></a>.
+        </p>
+        <p class="text-text-secondary leading-snug max-w-2xl">
+          Open that link in your browser. You're now looking at <em>your</em>
+          copy of the site, running on your own computer — invisible to the
+          rest of the internet for now. Keep this tab open as you go: every
+          time the agent edits the site, the preview refreshes automatically.
+        </p>
+      </section>
+
+      <!-- Make it yours -->
+      <section id="customize" class="scroll-mt-8 mb-16">
+        <div class="flex items-center gap-3 mb-3">
+          <Icon name="lucide:message-square" class="w-5 h-5 text-accent-blue" />
+          <h2 class="text-xl text-text-primary">4. Make it yours</h2>
+        </div>
+        <p class="text-text-secondary leading-snug mb-4 max-w-2xl">
+          Now tell the agent what you want — content, colours, layout, vibe,
+          sites you love, fonts, photos, inspiration. Be vague or be
+          specific. <em>"Make it feel like a 1970s science magazine"</em>
+          works just as well as <em>"primary colour #ff6b35, two columns, my
+          GitHub at the top"</em>. The agent will ask follow-up questions
+          where it needs to.
+        </p>
+        <p class="text-text-secondary leading-snug mb-6 max-w-2xl">
+          If you'd like a starting point, this kind of first message works well:
+        </p>
+        <pre class="bg-bg-surface border border-accent-border-subtle p-4 text-sm overflow-x-auto leading-relaxed mb-6"><code>Hi! I'd like to turn this template into my personal website.
+
+My name is <span class="text-accent-blue">Your Name</span>.
+My email is <span class="text-accent-blue">you@example.com</span>.
+My GitHub is <span class="text-accent-blue">your-username</span>.
+
+Please fill in all the placeholders for me, and write a short
+homepage introducing me as <span class="text-accent-blue">a few words about you</span>.</code></pre>
+        <p class="text-text-secondary leading-snug max-w-2xl">
+          From there, just keep chatting. "Add a page about my cat." "Use a
+          warmer colour palette." "Add a list of my favourite books." If you
+          don't like something the agent did, say so — it can undo and try
+          again.
+        </p>
+      </section>
+
+      <!-- Publish -->
+      <section id="publish" class="scroll-mt-8 mb-16">
+        <div class="flex items-center gap-3 mb-3">
+          <Icon name="lucide:cloud-upload" class="w-5 h-5 text-accent-blue" />
+          <h2 class="text-xl text-text-primary">5. Put it on the internet</h2>
+        </div>
+        <p class="text-text-secondary leading-snug mb-6 max-w-2xl">
+          GitHub will host your site for free. The setup takes about two
+          minutes and is a few clicks in the GitHub website — the
+          <a href="/about/" class="link-accent">publishing page</a> walks
+          through it step by step, including how to use a custom domain like
+          <code>yourname.com</code> if you have one.
+        </p>
+        <div class="flex flex-wrap gap-2 xs:gap-4">
+          <a href="/about/#github-pages" class="btn">
+            <Icon name="lucide:github" class="w-4 h-4" />
+            Free GitHub URL
+          </a>
+          <a href="/about/#custom-domain" class="btn">
+            <Icon name="lucide:globe" class="w-4 h-4" />
+            Custom domain
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </div>
+</Layout>
