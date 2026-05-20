@@ -19,7 +19,7 @@
   "dependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/sitemap": "^3.7.2",
-    "@iconify-json/lucide": "^1.2.0",
+    "@iconify-json/lucide": "^1.2.108",
     "@tailwindcss/vite": "^4.2.0",
     "astro": "^6.3.1",
     "astro-broken-link-checker": "github:hoxxep/astro-broken-link-checker#patch",
