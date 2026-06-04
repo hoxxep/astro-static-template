@@ -21,7 +21,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@iconify-json/lucide": "^1.2.0",
     "@tailwindcss/vite": "^4.2.0",
-    "astro": "^6.3.1",
+    "astro": "^6.4.4",
     "astro-broken-link-checker": "github:hoxxep/astro-broken-link-checker#patch",
     "astro-icon": "^1.1.5",
     "tailwindcss": "^4.3.0",
