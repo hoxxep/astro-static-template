@@ -24,7 +24,7 @@
     "astro": "^6.4.8",
     "astro-broken-link-checker": "github:hoxxep/astro-broken-link-checker#patch",
     "astro-icon": "^1.1.5",
-    "tailwindcss": "^4.3.0",
+    "tailwindcss": "^4.3.2",
     "typescript": "^6.0.3"
   },
   "devDependencies": {
